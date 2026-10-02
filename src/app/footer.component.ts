@@ -18,7 +18,7 @@ import { I18nService } from './i18n.service';
       <div class="container cols">
         @for (c of columns; track c.title) {
           <nav [attr.aria-label]="i18n.t(c.title)"><h3>{{ i18n.t(c.title) }}</h3>
-            <ul>@for (l of c.links; track l) {<li><a [href]="l === 'footer.about' ? '/about' : '#'">{{ i18n.t(l) }}</a></li>}</ul></nav>
+            <ul>@for (l of c.links; track l) {<li><a [href]="linkFor(l)">{{ i18n.t(l) }}</a></li>}</ul></nav>
         }
         <div class="career"><div class="career-heading"><svg class="career-icon" viewBox="0 0 40 48" aria-hidden="true"><path d="M19 9c-5-6-13-1-10 5-7 1-5 11 1 11-2 7 8 10 12 4 6 3 11-3 7-8 6-5 1-13-6-11-1-3-2-4-4-5Z" fill="#d7dadd"/><path d="M18 23h5v22h-5zM15 29h3v2h-3zm8 2h4v2h-4zm-8 5h3v2h-3zm8 2h4v2h-4z" fill="#b8bdc1"/><path d="M16 45h9" stroke="#858b90" stroke-width="1.5"/></svg><h3>{{ i18n.t('career.title') }}</h3></div>
           <p>{{ i18n.t('career.text') }}</p>
@@ -53,6 +53,13 @@ import { I18nService } from './i18n.service';
 })
 export class FooterComponent {
   readonly i18n = inject(I18nService);
+  linkFor(key: string): string {
+    if (key === 'footer.about') return '/about';
+    if (key === 'footer.news') return '/news';
+    if (key === 'footer.contactLink') return '/contact';
+    return '#';
+  }
+
   readonly columns = [
     { title: 'footer.products', links: ['footer.filling', 'footer.bottleSeries', 'footer.package', 'footer.linear', 'footer.rotary'] },
     { title: 'footer.solutions', links: ['footer.endline', 'footer.software', 'footer.research', 'footer.conveyor', 'footer.special'] },
